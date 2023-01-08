@@ -1,16 +1,14 @@
-# hygge_app
+<p align="center">
+  <img src="https://i.imgur.com/Smw9g0w.png" height="100px" />
+</p>
 
-A new Flutter project.
+---
 
-## Getting Started
+<h3>Sobre</h3>
 
-This project is a starting point for a Flutter application.
+Projeto com propósito de inovar no ramo de compras de produtos importados. Uma descrição mais detalhada sairá em breve, readme em construção.
 
-A few resources to get you started if this is your first Flutter project:
+<h3>Telas</h3>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src="https://i.imgur.com/ubJO9Nr.png" height="500px" />
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
