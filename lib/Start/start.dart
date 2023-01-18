@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, unused_element, sort_child_properties_last, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, avoid_print
+// ignore_for_file: prefer_const_constructors, unused_element, sort_child_properties_last, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, avoid_print, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:hygge_app/Login/login.dart';
 import 'package:video_player/video_player.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Start extends StatefulWidget {
   const Start({super.key});
@@ -16,6 +18,8 @@ class Start extends StatefulWidget {
 class _StartState extends State<Start> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
+  CarouselController buttonCarouselController = CarouselController();
+  int currentPage = 0;
 
   @override
   void initState() {
@@ -33,9 +37,75 @@ class _StartState extends State<Start> {
     super.dispose();
   }
 
+  //function to go immediately to specific page
+  void _goToPageImmediately(int page) {
+    buttonCarouselController.jumpToPage(page);
+    setState(() {
+      currentPage = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> pages = [
+      Container(
+        margin: EdgeInsets.only(top: 50),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: () => _goToPageImmediately(1),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.075,
+                width: MediaQuery.of(context).size.width * 0.75,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(50),
+                  border: GradientBoxBorder(
+                      gradient: LinearGradient(
+                          colors: [Colors.indigo, Colors.purple, Colors.red]),
+                      width: 2),
+                ),
+                child: Center(
+                    child: GradientText(
+                  'Sign In',
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                )),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.045,
+            ),
+            InkWell(
+              onTap: () => _goToPageImmediately(2),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.075,
+                width: MediaQuery.of(context).size.width * 0.75,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.indigo, Colors.purple, Colors.red]),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Center(
+                    child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold),
+                )),
+              ),
+            )
+          ],
+        ),
+      ),
+      Login(context: context),
+      Container(
+        color: Colors.purple,
+      )
+    ];
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -56,66 +126,38 @@ class _StartState extends State<Start> {
               },
             ),
             Column(
-              // ignore: prefer_const_literals_to_create_immutables
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 220),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 65),
-                        child: SvgPicture.asset('assets/svg/logo_hygge.svg', height: 70),
-                      ),
-                      InkWell(
-                        onTap: () => print("Vai para tela de login"),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.075,
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(50),
-                            border: GradientBoxBorder(
-                              gradient: LinearGradient(colors: [Colors.indigo, Colors.purple, Colors.red]),
-                              width: 2
-                            ),
-                          ),
-                          child: Center(
-                            child: GradientText(
-                              'Sign In',
-                              style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold
-                              ),
-                            )
-                          ),
+                  margin: EdgeInsets.only(top: 200),
+                  child: Column(children: [
+                    InkWell(
+                      onTap: () => _goToPageImmediately(0),
+                      child: SvgPicture.asset('assets/svg/logo_hygge.svg', height: 70)
+                    ),
+                    Container(
+                      child: CarouselSlider(
+                        items: pages,
+                        carouselController: buttonCarouselController,
+                        options: CarouselOptions(
+                          height: MediaQuery.of(context).size.height * 0.45,
+                          viewportFraction: 1,
+                          initialPage: 0,
+                          enableInfiniteScroll: false,
+                          reverse: false,
+                          autoPlay: false,
+                          autoPlayInterval: Duration(seconds: 3),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal,
+                          scrollPhysics: NeverScrollableScrollPhysics(),
                         ),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.045,
-                      ),
-                      InkWell(
-                        onTap: () => print("Vai para tela de cadastro tradicional"),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.075,
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [Colors.indigo, Colors.purple, Colors.red]),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold
-                              ),
-                            )
-                          ),
-                        ),
-                      )
-                    ]
-                  ),
+                    ),
+                  ]),
                 ),
                 Spacer(),
                 Padding(
@@ -133,7 +175,6 @@ class _StartState extends State<Start> {
                   padding: EdgeInsets.only(
                     bottom: 25,
                   ),
-                  // '© 2023 Hygge'
                   child: GradientText(
                     '© 2023 Hygge',
                     style: TextStyle(
