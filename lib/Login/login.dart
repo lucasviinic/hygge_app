@@ -58,6 +58,8 @@ class _LoginState extends State<Login> {
           height: MediaQuery.of(context).size.height * 0.045,
         ),
         TextField(
+          obscureText: true,
+          obscuringCharacter: '●',
           decoration: InputDecoration(
               suffixIcon: Icon(Icons.remove_red_eye),
               contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
