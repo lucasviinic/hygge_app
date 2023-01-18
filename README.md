@@ -10,5 +10,8 @@ Projeto com propósito de inovar no ramo de compras de produtos importados. Uma 
 
 <h3>Telas</h3>
 
-<img src="https://i.imgur.com/ubJO9Nr.png" height="500px" />
+<p float="left">
+  <img src="https://i.imgur.com/6Qk8h7b.jpg" height="500px" />
+  <img src="https://i.imgur.com/VyRiLHZ.jpg" height="500px" />
+</p>
 
