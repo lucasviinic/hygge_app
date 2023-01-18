@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:hygge_app/Login/login.dart';
+import 'package:hygge_app/Start/Login/login.dart';
+import 'package:hygge_app/Start/Register/register.dart';
 import 'package:video_player/video_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -37,9 +38,16 @@ class _StartState extends State<Start> {
     super.dispose();
   }
 
-  //function to go immediately to specific page
   void _goToPageImmediately(int page) {
     buttonCarouselController.jumpToPage(page);
+    setState(() {
+      currentPage = page;
+    });
+  }
+
+  //go to page with animation
+  void _goToPage(int page) {
+    buttonCarouselController.animateToPage(page);
     setState(() {
       currentPage = page;
     });
@@ -53,7 +61,7 @@ class _StartState extends State<Start> {
         child: Column(
           children: [
             InkWell(
-              onTap: () => _goToPageImmediately(1),
+              onTap: () => _goToPage(1),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.075,
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -61,12 +69,14 @@ class _StartState extends State<Start> {
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(50),
                   border: GradientBoxBorder(
-                      gradient: LinearGradient(
-                          colors: [Colors.indigo, Colors.purple, Colors.red]),
-                      width: 2),
+                    gradient: LinearGradient(
+                      colors: [Colors.indigo, Colors.purple, Colors.red]
+                    ),
+                    width: 2
+                  ),
                 ),
                 child: Center(
-                    child: GradientText(
+                  child: GradientText(
                   'Sign In',
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                 )),
@@ -76,32 +86,31 @@ class _StartState extends State<Start> {
               height: MediaQuery.of(context).size.height * 0.045,
             ),
             InkWell(
-              onTap: () => _goToPageImmediately(2),
+              onTap: () => _goToPage(2),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.075,
                 width: MediaQuery.of(context).size.width * 0.75,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                      colors: [Colors.indigo, Colors.purple, Colors.red]),
+                    colors: [Colors.indigo, Colors.purple, Colors.red]
+                  ),
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Center(
-                    child: Text(
-                  'Sign Up',
+                  child: Text(
+                  'Register',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold),
                 )),
               ),
             )
           ],
         ),
       ),
-      Login(context: context),
-      Container(
-        color: Colors.purple,
-      )
+      currentPage == 1 ? Login(context: context) : SizedBox.shrink(),
+      currentPage == 2 ? Register(context: context) : SizedBox.shrink(),
     ];
 
     return Scaffold(
@@ -130,10 +139,9 @@ class _StartState extends State<Start> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 200),
                   child: Column(children: [
                     InkWell(
-                      onTap: () => _goToPageImmediately(0),
+                      onTap: () => _goToPage(0),
                       child: SvgPicture.asset('assets/svg/logo_hygge.svg', height: 70)
                     ),
                     Container(
@@ -159,7 +167,11 @@ class _StartState extends State<Start> {
                     ),
                   ]),
                 ),
-                Spacer(),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
                 Padding(
                   padding: EdgeInsets.only(bottom: 40),
                   child: Row(
@@ -183,7 +195,7 @@ class _StartState extends State<Start> {
                   ),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),

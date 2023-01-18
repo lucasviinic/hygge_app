@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:hygge_app/Login/login.dart';
 import 'package:hygge_app/Start/start.dart';
 
 void main() {
